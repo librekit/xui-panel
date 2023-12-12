@@ -52,7 +52,19 @@
     - name: SSL- Obtain Let's Encrypt SSL Certificate
       shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    - name: Your panel credentials
+    - name: #### Panel password
       debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} "
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} |####"
+
+    - name: #### SSL certificate
+      debug:
+        msg: "IMPORTANT ##### Copy this in your panel settings to setup the SSL certificate (HTTPS)"
+
+    - name: # SSL certificate
+      debug:
+        msg: "Panel Certificate Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem"
+
+    - name: # SSL certificate
+      debug:
+        msg: "Panel Certificate Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem"
 
