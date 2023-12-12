@@ -45,5 +45,5 @@
 
     - name: This is your initial root password 
       debug:
-        msg: "IMPORTANT  \n **************** \n PANEL URL: {{panel_domain}}:{{panel_port}} \n Username: admin \n Password: {{ panel_password }} \n"
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} \n"
 
