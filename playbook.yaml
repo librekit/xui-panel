@@ -28,9 +28,9 @@
     
     - name: SSL: Ensure snapd is installed
       apt:
-      name: snapd
-      state: present
-      update_cache: yes
+        name: snapd
+        state: present
+        update_cache: yes
     # - name: Debug script output
     #   debug:
     #     var: script_output.stdout_lines
