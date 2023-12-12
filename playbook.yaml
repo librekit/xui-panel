@@ -31,9 +31,9 @@
       name: snapd
       state: present
       update_cache: yes
-    - name: Debug script output
-      debug:
-        var: script_output.stdout_lines
+    # - name: Debug script output
+    #   debug:
+    #     var: script_output.stdout_lines
 
     - name: SSL: Install core via Snap
       shell: "snap install core; snap refresh core"
