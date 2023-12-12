@@ -38,3 +38,7 @@
     - name: Obtain Let's Encrypt SSL Certificate
       shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
+    - name: This is your initial root password 
+      debug:
+        msg: "IMPORTANT  \n **************** \n PANEL URL: {{panel_domain}}:{{panel_port}} \n Username: admin \n Password: {{ panel_password }} \n"
+
