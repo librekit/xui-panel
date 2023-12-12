@@ -26,7 +26,7 @@
       debug:
         msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} \n"
     
-    - name: SSL: Ensure snapd is installed
+    - name: SSL Ensure snapd is installed
       apt:
         name: snapd
         state: present
@@ -35,16 +35,16 @@
     #   debug:
     #     var: script_output.stdout_lines
 
-    - name: SSL: Install core via Snap
+    - name: SSL- Install core via Snap
       shell: "snap install core; snap refresh core"
 
-    - name: SSL: Install Certbot via Snap (Classic)
+    - name: SSL- Install Certbot via Snap (Classic)
       shell: "snap install --classic certbot"
 
-    - name: SSL: Create Symbolic Link for Certbot
+    - name: SSL- Create Symbolic Link for Certbot
       shell: "ln -s /snap/bin/certbot /usr/bin/certbot"
 
-    - name: SSL: Obtain Let's Encrypt SSL Certificate
+    - name: SSL- Obtain Let's Encrypt SSL Certificate
       shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
     - name: Your panel credentials
