@@ -21,7 +21,12 @@
       changed_when: false
       ignore_errors: yes
       timeout: 300  # Set the timeout to 300 seconds (5 minutes)
-
+    
+    - name: Ensure snapd is installed
+        apt:
+          name: snapd
+          state: present
+          update_cache: yes
     - name: Debug script output
       debug:
         var: script_output.stdout_lines
