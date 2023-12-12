@@ -24,7 +24,7 @@
 
     - name: Your panel credentials 
       debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} \n"
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }}"
     
     - name: SSL Ensure snapd is installed
       apt:
@@ -49,5 +49,5 @@
 
     - name: Your panel credentials
       debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} \n"
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} "
 
