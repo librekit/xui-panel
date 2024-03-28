@@ -20,7 +20,7 @@
       register: script_output
       changed_when: false
       ignore_errors: yes
-      timeout: 300  # Set the timeout to 300 seconds (5 minutes)
+      timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
 
     - name: Your panel credentials 
       debug:
