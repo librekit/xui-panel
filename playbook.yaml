@@ -5,7 +5,6 @@
   vars:
     panel_domain: "{{xui_domain}}"
     panel_username: "admin"
-    panel_password: "{{xui_password}}"
     panel_port: "5678"
   tasks:
     - name: Update apt cache
@@ -20,22 +19,11 @@
       become: yes
 
     - name: Run the Bash Command
-      expect:
-        command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
-
-        responses:
-          "Do you want to continue with the modification \\[y/n\\]\\? :.*": "y"
-          'Please set up your username:': '{{ panel_username }}'
-          'Please set up your password:': '{{ panel_password }}'
-          'Please set up the panel port:': '{{ panel_port }}'
+      command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
       register: script_output
       changed_when: false
       ignore_errors: yes
       timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
-
-    - name: Your panel credentials 
-      debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }}"
     
     - name: SSL Ensure snapd is installed
       apt:
@@ -63,10 +51,7 @@
     - name: SSL- Obtain Let's Encrypt SSL Certificate
       shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    - name: #### Panel password
-      debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} |####"
-
+   
     - name: #### SSL certificate
       debug:
         msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
