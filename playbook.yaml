@@ -32,6 +32,20 @@
         state: present
         update_cache: yes
 
+        
+    - name: Display XUI current settings
+      expect:
+        command: "x-ui"
+        responses:
+          "Enter your choice:": "10\n"
+      register: xui_settings_output
+      changed_when: false
+      timeout: 60  # Adjust as necessary
+    
+    - name: Output XUI settings
+      debug:
+        var: xui_settings_output.stdout
+
     - name: Install core via Snap
       shell: "snap install core; snap refresh core"
 
