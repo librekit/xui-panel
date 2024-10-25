@@ -60,3 +60,7 @@
     - name: Display SSL certificate paths
       debug:
         msg: "IMPORTANT: Copy this to your panel settings to setup the SSL certificate (HTTPS) -> Public Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/cert.pem -> Private Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/privkey.pem"
+
+    - name: Output XUI settings
+      debug:
+        var: xui_settings_output.stdout_lines
