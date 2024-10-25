@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    panel_domain: "{{xui_domain}}"
+    panel_domain: "{{ xui_domain }}"
     panel_username: "admin"
     panel_port: "5678"
   tasks:
@@ -15,44 +15,39 @@
 
     - name: Upgrade all packages to the latest version
       ansible.builtin.apt:
-        upgrade: yes
+        name: "*"
+        state: latest
       become: yes
 
-    - name: Run the Bash Command
+    - name: Run the Bash Command to Install XUI
       command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
       register: script_output
       changed_when: false
       ignore_errors: yes
       timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
     
-    - name: SSL Ensure snapd is installed
-      apt:
+    - name: Ensure snapd is installed
+      ansible.builtin.apt:
         name: snapd
         state: present
         update_cache: yes
-    # - name: Debug script output
-    #   debug:
-    #     var: script_output.stdout_lines
 
-    - name: SSL- Install core via Snap
+    - name: Install core via Snap
       shell: "snap install core; snap refresh core"
 
-    - name: SSL- Install Certbot via Snap (Classic)
+    - name: Install Certbot via Snap (Classic)
       shell: "snap install --classic certbot"
 
-    - name: SSL- Create Symbolic Link for Certbot
-      file:
+    - name: Create Symbolic Link for Certbot
+      ansible.builtin.file:
         src: /snap/bin/certbot
         dest: /usr/bin/certbot
         state: link
         force: yes
 
-
-    - name: SSL- Obtain Let's Encrypt SSL Certificate
+    - name: Obtain Let's Encrypt SSL Certificate
       shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-   
-    - name: #### SSL certificate
+    - name: Display SSL certificate paths
       debug:
-        msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
-
+        msg: "IMPORTANT: Copy this to your panel settings to setup the SSL certificate (HTTPS) -> Public Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/cert.pem -> Private Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/privkey.pem"
