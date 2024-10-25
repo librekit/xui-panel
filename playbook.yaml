@@ -31,17 +31,10 @@
       register: xui_settings_output
       changed_when: false
     
-    - name: Extract domain, port, and web base
-      set_fact:
-        panel_domain: "{{ xui_settings_output.stdout | regex_search('Domain:\\s*(\\S+)', '\\1') }}"
-        panel_port: "{{ xui_settings_output.stdout | regex_search('Port:\\s*(\\d+)', '\\1') }}"
-        panel_webbase: "{{ xui_settings_output.stdout | regex_search('Web Base:\\s*(\\S+)', '\\1') }}"
-    
-    - name: Display extracted settings
+    - name: Output XUI settings
       debug:
-        msg: "Domain: {{ panel_domain }}, Port: {{ panel_port }}, Web Base: {{ panel_webbase }}"
+        var: xui_settings_output.stdout_lines
 
-    
     - name: Ensure snapd is installed
       ansible.builtin.apt:
         name: snapd
