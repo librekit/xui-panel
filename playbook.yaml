@@ -25,6 +25,20 @@
       changed_when: false
       ignore_errors: yes
       timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
+
+    - name: Display XUI current settings
+      expect:
+        command: "x-ui"
+        responses:
+          "Please enter your selection \\[0-21\\]:": "10\n"
+      register: xui_settings_output
+      changed_when: false
+      timeout: 60  # Adjust as necessary
+    
+    - name: Output XUI settings
+      debug:
+        var: xui_settings_output.stdout_lines
+
     
     - name: Ensure snapd is installed
       ansible.builtin.apt:
@@ -33,18 +47,7 @@
         update_cache: yes
 
         
-    - name: Display XUI current settings
-      expect:
-        command: "x-ui"
-        responses:
-          "Enter your choice:": "10\n"
-      register: xui_settings_output
-      changed_when: false
-      timeout: 60  # Adjust as necessary
-    
-    - name: Output XUI settings
-      debug:
-        var: xui_settings_output.stdout
+
 
     - name: Install core via Snap
       shell: "snap install core; snap refresh core"
