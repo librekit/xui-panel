@@ -20,13 +20,18 @@
       become: yes
 
     - name: Run the Bash Command to Install XUI with auto-input
-      shell: |
+      ansible.builtin.shell: |
         curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh
         chmod +x install.sh
         bash install.sh <<EOF
-    y
-    5678
+        y
+        5678
     EOF
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      timeout: 1000
+
       register: script_output
       changed_when: false
       ignore_errors: yes
